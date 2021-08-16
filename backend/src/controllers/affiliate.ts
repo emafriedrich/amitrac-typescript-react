@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { Affiliate } from '../models/affiliate';
+import { User } from '../models/user';
 
 export async function findById(req: Request, res: Response) {
   const { id } = req.params;
@@ -8,9 +9,14 @@ export async function findById(req: Request, res: Response) {
 
 export async function saveOrUpdate(req: Request, res: Response) {
   const { body } = req;
-  let affiliate = await Affiliate.findOne(req.body.id);
-  if (!affiliate) {
+  let affiliate;
+  if (!body.id) {
     affiliate = new Affiliate();
+    const user = new User(body.username, body.initialPassword);
+    await user.save();
+    affiliate.user = user;
+  } else {
+    affiliate = await Affiliate.findOne(body.id);
   }
   affiliate.set(body);
   await affiliate.save();
@@ -19,5 +25,5 @@ export async function saveOrUpdate(req: Request, res: Response) {
 
 
 export async function findAll(req: Request, res: Response) {
-  res.send(await Affiliate.find());
+  res.send(await Affiliate.find({ relations: ['user'] }));
 }

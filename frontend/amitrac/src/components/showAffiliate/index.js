@@ -13,7 +13,7 @@ import { saveAffiliateInit } from '../../redux/affiliates/actions';
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
-      margin: theme.spacing(1)
+      margin: theme.spacing(2)
     },
   },
   trucks: {
@@ -28,8 +28,10 @@ function ShowAffiliate({ dispatch, selectedAffiliate }) {
   const [companyName, setCompanyName] = useState(selectedAffiliate?.companyName);
   const [cuit, setCuit] = useState(selectedAffiliate?.cuit);
   const [credentialNumber, setCredentialNumber] = useState(selectedAffiliate?.credentialNumber);
-  const [credentialExpiration, setCredentialExpiration] = useState(selectedAffiliate?.credentialExpiration);
+  const [credentialExpiration, setCredentialExpiration] = useState(selectedAffiliate?.credentialExpiration || new Date());
   const [lastAffiliate, setLastAffiliate] = useState(selectedAffiliate);
+  const [initialPassword, setInitialPassword] = useState('');
+  const [username, setUsername] = useState('');
 
   if (!selectedAffiliate) {
     return null;
@@ -39,6 +41,7 @@ function ShowAffiliate({ dispatch, selectedAffiliate }) {
     setCuit(selectedAffiliate.cuit);
     setCredentialNumber(selectedAffiliate.credentialNumber);
     setCredentialExpiration(selectedAffiliate.credentialExpiration);
+    setUsername(selectedAffiliate.user?.name);
   }
 
   const saveBaseData = () => {
@@ -48,28 +51,49 @@ function ShowAffiliate({ dispatch, selectedAffiliate }) {
       credentialNumber,
       credentialExpiration,
       companyName,
+      username,
+      initialPassword,
     }));
   };
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
-      <TextField id="outlined-basic" label="Nombre del socio" variant="outlined" value={companyName} onChange={(event) => setCompanyName(event.target.value) } />
-      <TextField id="outlined-basic" label="CUIT" variant="outlined" value={cuit} onChange={(event) => setCuit(event.target.value)}/>
-      <TextField id="outlined-basic" label="Número de credencial" variant="outlined" value={credentialNumber} onChange={(event) => setCredentialNumber(event.target.value)}/>
+      <TextField label="Nombre del socio" variant="outlined" value={companyName} onChange={(event) => setCompanyName(event.target.value) } />
+      <TextField label="CUIT" variant="outlined" value={cuit} onChange={(event) => setCuit(event.target.value)}/>
+      <TextField label="Número de credencial" variant="outlined" value={credentialNumber} onChange={(event) => setCredentialNumber(event.target.value)}/>
+      { !selectedAffiliate.id &&
+        <>
+          <TextField
+            label="Nombre de usuario inicial"
+            variant="outlined"
+            value={username}
+            onChange={(event) => setUsername(event.target.value)}
+        />
+        <TextField
+          label="Contraseña inicial"
+          variant="outlined"
+          value={initialPassword}
+          onChange={(event) => setInitialPassword(event.target.value)}
+        />
+      </>
+      }
       <KeyboardDatePicker  disableToolbar
           variant="inline"
           format="dd/MM/yyyy"
           margin="normal"
           id="date-picker-inline"
-          label="Date picker inline"
+          label="Fecha expiración credencial"
+          inputVariant="outlined"
           value={credentialExpiration}
           onChange={(date) => {setCredentialExpiration(date)}} >
       </KeyboardDatePicker>
       <Button onClick={saveBaseData}>Guardar</Button>
-      <TruckDrivers></TruckDrivers>
-      <div className={classes.trucks}>
-        <Trucks></Trucks>
-      </div>
+      { selectedAffiliate.id && <TruckDrivers></TruckDrivers> }
+      { selectedAffiliate.id &&
+        <div className={classes.trucks}>
+          <Trucks></Trucks>
+        </div>
+      }
     </form>
   );
 }

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 import { Button } from '@material-ui/core'
 import { connect } from 'react-redux';
-import { addTruckDriver } from '../../redux/affiliates/actions';
+
 import AddTruckDriverModal from './addTruckDriverModal';
 
 const columns = [
@@ -17,7 +17,7 @@ const columns = [
 
 function TruckDrivers({ selectedAffiliate }) {
 
-  const [rows, setRows] = React.useState(selectedAffiliate?.truckDrivers || []);
+  const rows = selectedAffiliate?.truckDrivers || [];
 
   const [open, setOpen] = React.useState(false); 
   

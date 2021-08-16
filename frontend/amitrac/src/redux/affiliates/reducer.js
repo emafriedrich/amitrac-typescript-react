@@ -12,10 +12,10 @@ export function affiliatesReducer(state = initialState, action) {
       const newAffiliate = {
         truckDrivers: [],
         trucks: [],
+        credentialExpiration: new Date(),
       };
       return {
         ...state,
-        affiliates: state.affiliates.concat([newAffiliate]),
         selectedAffiliate: newAffiliate,
       }; 
     case SAVE_AFFILIATE_INIT:

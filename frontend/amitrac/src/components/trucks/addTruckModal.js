@@ -78,30 +78,34 @@ function AddTruckModal ({ open, setOpen, selectedAffiliate, saveTruckAction }) {
             onChange={(event) => setBrand(event.target.value)}
             >
           </TextField>
-          <KeyboardDatePicker  disableToolbar
+          <KeyboardDatePicker
+            disableToolbar
             variant="inline"
+            inputVariant="outlined"
             format="dd/MM/yyyy"
             margin="normal"
             id="date-picker-inline"
-            label="Date picker inline"
+            label="Fecha de expiración de la vtv"
             value={vtvExpiration}
             onChange={(date) => setVtvExpiration(date) } >
           </KeyboardDatePicker>
           <KeyboardDatePicker  disableToolbar
             variant="inline"
+            inputVariant="outlined"
             format="dd/MM/yyyy"
             margin="normal"
             id="date-picker-inline"
-            label="Date picker inline"
+            label="Fecha de expiración del seguro"
             value={assuranceExpiration}
             onChange={(date) => setAssuranceExpiration(date) } >
           </KeyboardDatePicker>
           <KeyboardDatePicker  disableToolbar
             variant="inline"
+            inputVariant="outlined"
             format="dd/MM/yyyy"
             margin="normal"
             id="date-picker-inline"
-            label="Date picker inline"
+            label="Fecha de expiración de la patente"
             value={patentExpiration}
             onChange={(date) => setPatentExpiration(date) } >
           </KeyboardDatePicker>
