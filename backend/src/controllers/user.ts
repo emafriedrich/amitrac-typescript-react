@@ -10,12 +10,17 @@ export async function register(req: Request, res: Response) {
 
 export async function login(req: Request, res: Response) {
   const { name, password } = req.body;
-  const user = await User.findOneOrFail({ name });
 
-  const ok = user.comparePassword(password);
-  res.status(ok ? 200 : 401).send(ok ? {
-    credential: user.credentialNumber()
-  } : null);
+  const user = await User.findOne({ name });
+
+  if (user) {
+    const ok = user.comparePassword(password);
+    res.status(ok ? 200 : 401).send(ok ? {
+      credential: user.credentialNumber()
+    } : null);
+  } else {
+    res.status(401).send({ message: 'User and/or password doesn\'t match' });
+  }
 }
 
 export async function changePassword(req: Request, res: Response) {
