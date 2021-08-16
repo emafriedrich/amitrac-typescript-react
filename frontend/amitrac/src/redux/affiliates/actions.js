@@ -21,7 +21,8 @@ export function addAffiliate(affiliate) {
 export function saveAffiliateInit(affiliate) {
   return async (dispatch) => {
     await saveAffiliate(affiliate);
-    dispatch(saveAffiliateSuccess(affiliate));
+    alert('Afiliado guardado');
+    window.location.reload();
   }
 }
 
