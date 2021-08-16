@@ -8,9 +8,9 @@ export async function saveOrUpdate(body: any) {
   }
   truck.patent = body.patent;
   truck.brand = body.brand;
-  truck.vtvExpiration = body.vtvExpiration;
-  truck.assuranceExpiration = body.assuranceExpiration;
-  truck.patentExpiration = body.patentExpiration;
+  truck.vtvExpiration = new Date(body.vtvExpiration);
+  truck.assuranceExpiration = new Date(body.assuranceExpiration);
+  truck.patentExpiration = new Date(body.patentExpiration);
   truck.affiliate = await Affiliate.findOne(body.affiliateId);
   await truck.save();
   return truck;

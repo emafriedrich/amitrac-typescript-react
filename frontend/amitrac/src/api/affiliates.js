@@ -14,3 +14,6 @@ export async function saveTruckDriver(truckDriver) {
   await api.post('/truckDrivers', truckDriver);
 }
 
+export async function saveTruck(truck) {
+  await api.post('/trucks', truck);
+}

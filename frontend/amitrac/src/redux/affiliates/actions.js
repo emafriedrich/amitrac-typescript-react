@@ -1,10 +1,10 @@
-import { getAffiliates, saveAffiliate, saveTruckDriver } from '../../api/affiliates';
+import { getAffiliates, saveAffiliate, saveTruck, saveTruckDriver } from '../../api/affiliates';
 
 export const ADD_AFFILIATE = 'ADD_AFFILIATE';
 export const SAVE_AFFILIATE_INIT = 'SAVE_AFFILIATE_INIT';
 export const SAVE_AFFILIATE_SUCCESS = 'SAVE_AFFILIATE_SUCCESS';
 export const ADD_TRUCK_DRIVER = 'ADD_TRUCK_DRIVER';
-export const ADD_TRUCK = 'ADD_TRUCK';
+export const SAVE_TRUCK_INIT = 'ADD_TRUCK';
 export const FIND_ALL_INIT = 'FIND_ALL_INIT';
 export const FIND_ALL_SUCCESS = 'FIND_ALL_SUCCESS';
 export const SELECT_AFFILIATE = 'SELECT_AFFILIATE';
@@ -33,8 +33,12 @@ export function addTruckDriver() {
   return { type: ADD_TRUCK_DRIVER };
 }
 
-export function addTruck(truck) {
-  return { type: ADD_TRUCK, truck };
+export function saveTruckInit(truck) {
+  return async () => {
+    await saveTruck(truck);
+    alert('Camión guardado');
+    window.location.reload();
+  }
 }
 
 export function findAllInit() {
@@ -53,8 +57,9 @@ export function selectAffiliate(selectedAffiliate) {
 }
 
 export function saveTruckDriverInit(truckDriver) {
-  return async (dispatch) => {
+  return async () => {
     await saveTruckDriver(truckDriver);
-    // dispatch(saveTruckDriverSuccess());
+    alert('Camionero guardado');
+    window.location.reload();
   }
 }
