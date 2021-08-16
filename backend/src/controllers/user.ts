@@ -19,6 +19,7 @@ export async function login(req: Request, res: Response) {
       credential: user.credentialNumber(),
       affiliateId: user.affiliateId(),
       userType: user.userType(),
+      truckDriverId: user.truckDriver?.id,
     } : null);
   } else {
     res.status(401).send({ message: 'User and/or password doesn\'t match' });
