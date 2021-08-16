@@ -25,6 +25,8 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { connect } from 'react-redux';
 import { findAllInit, selectAffiliate } from './redux/affiliates/actions';
 
+import { addAffiliate as addAffiliateAction } from './redux/affiliates/actions';
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -94,7 +96,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function MiniDrawer(props) {
-  console.log(props);
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -106,9 +107,11 @@ function MiniDrawer(props) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
   useEffect(() => {
     props.getAffiliates();
   }, []);
+
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
     <div className={classes.root}>
@@ -185,7 +188,7 @@ function MiniDrawer(props) {
               })}
             </Select>
           </FormControl>
-          <Button>Agregar nuevo</Button>
+          <Button onClick={props.addAffiliate}>Agregar nuevo</Button>
         </div>
         <ShowAffiliate></ShowAffiliate>
       </main>
@@ -198,6 +201,6 @@ const mapStateToProps = (state) => {
   return { affiliates: state.affiliates };
 };
 
-const mapDispatchToProps = { getAffiliates: findAllInit, setAffiliate: selectAffiliate };
+const mapDispatchToProps = { getAffiliates: findAllInit, setAffiliate: selectAffiliate, addAffiliate: addAffiliateAction };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MiniDrawer);

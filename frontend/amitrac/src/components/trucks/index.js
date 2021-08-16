@@ -2,6 +2,7 @@ import * as React from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 import { Button } from '@material-ui/core'
 import { connect } from 'react-redux';
+import AddTruckModal from './addTruckModal';
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 90 },
@@ -40,6 +41,13 @@ const columns = [
 
 function Trucks({ selectedAffiliate }) {
   const rows = selectedAffiliate?.trucks || [];
+
+  const [open, setOpen] = React.useState(false);
+
+  const addTruck = () => {
+    setOpen(true);
+  }
+
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
@@ -52,7 +60,11 @@ function Trucks({ selectedAffiliate }) {
           console.log(params);
         }}
       />
-      <Button>Agregar camion</Button>
+      <Button onClick={addTruck} >Agregar camion</Button>
+      <AddTruckModal
+        open={open}
+        setOpen={setOpen}
+      ></AddTruckModal>
     </div>
   );
 }

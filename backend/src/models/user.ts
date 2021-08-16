@@ -21,7 +21,7 @@ export class User extends BaseEntity {
   @Column('varchar')
   realPassword: string;
   
-  @OneToOne(() => Affiliate)
+  @OneToOne(() => Affiliate, (affiliate) => affiliate.user)
   affiliate: Affiliate;
 
   @OneToOne(() => TruckDriver, truckDriver => truckDriver.user, { eager: true })
@@ -32,7 +32,7 @@ export class User extends BaseEntity {
   }
 
   affiliateId() {
-    return this.affiliate ? this.affiliate.credentialNumber : this.truckDriver.affiliate_id;
+    return this.affiliate ? this.affiliate.id : this.truckDriver.affiliate_id;
   }
 
   userType() {

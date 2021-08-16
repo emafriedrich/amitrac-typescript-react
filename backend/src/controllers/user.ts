@@ -11,7 +11,7 @@ export async function register(req: Request, res: Response) {
 export async function login(req: Request, res: Response) {
   const { name, password } = req.body;
 
-  const user = await User.findOne({ name }, { relations: ['truckDriver', 'truckDriver.affiliate'] });
+  const user = await User.findOne({ name }, { relations: ['truckDriver', 'truckDriver.affiliate', 'affiliate'] });
 
   if (user) {
     const ok = user.comparePassword(password);

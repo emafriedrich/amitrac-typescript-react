@@ -1,4 +1,4 @@
-import { ADD_AFFILIATE, FIND_ALL_SUCCESS, SAVE_AFFILIATE_INIT, SAVE_AFFILIATE_SUCCESS, SELECT_AFFILIATE } from './actions';
+import { ADD_AFFILIATE, ADD_TRUCK_DRIVER, FIND_ALL_SUCCESS, SAVE_AFFILIATE_INIT, SAVE_AFFILIATE_SUCCESS, SELECT_AFFILIATE } from './actions';
 
 const initialState = {
   affiliates: [],
@@ -9,18 +9,25 @@ const initialState = {
 export function affiliatesReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_AFFILIATE:
+      const newAffiliate = {
+        truckDrivers: [],
+        trucks: [],
+      };
       return {
         ...state,
-        affiliates: state.affiliates.concat([action.affiliate])
+        affiliates: state.affiliates.concat([newAffiliate]),
+        selectedAffiliate: newAffiliate,
       }; 
     case SAVE_AFFILIATE_INIT:
       return {
         ...state,
-        isLoading: true,
+        affiliate: action.affiliate
       }
+    case ADD_TRUCK_DRIVER:
+      return { ...state };
     case SAVE_AFFILIATE_SUCCESS:
       return { ...state, isLoading: false };
-    case SELECT_AFFILIATE:
+      case SELECT_AFFILIATE:
       return { ...state, selectedAffiliate: action.selectedAffiliate };
     case FIND_ALL_SUCCESS:
       return { ...state, affiliates: action.affiliates };

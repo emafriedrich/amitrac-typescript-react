@@ -1,4 +1,4 @@
-import { getAffiliates } from '../../api/affiliates';
+import { getAffiliates, saveAffiliate, saveTruckDriver } from '../../api/affiliates';
 
 export const ADD_AFFILIATE = 'ADD_AFFILIATE';
 export const SAVE_AFFILIATE_INIT = 'SAVE_AFFILIATE_INIT';
@@ -8,6 +8,8 @@ export const ADD_TRUCK = 'ADD_TRUCK';
 export const FIND_ALL_INIT = 'FIND_ALL_INIT';
 export const FIND_ALL_SUCCESS = 'FIND_ALL_SUCCESS';
 export const SELECT_AFFILIATE = 'SELECT_AFFILIATE';
+export const SAVE_TRUCK_DRIVER = 'SAVE_TRUCK_DRIVER';
+export const SAVE_TRUCK_DRIVER_SUCCESS = 'SAVE_TRUCK_DRIVER_SUCCESS';
 
 export function addAffiliate(affiliate) {
   return {
@@ -17,18 +19,18 @@ export function addAffiliate(affiliate) {
 }
 
 export function saveAffiliateInit(affiliate) {
-  return {
-    type: SAVE_AFFILIATE_INIT,
-    affiliate,
-  };
+  return async (dispatch) => {
+    await saveAffiliate(affiliate);
+    dispatch(saveAffiliateSuccess(affiliate));
+  }
 }
 
 export function saveAffiliateSuccess() {
   return { type: SAVE_AFFILIATE_SUCCESS };
 }
 
-export function addTruckDriver(truckDriver) {
-  return { type: ADD_TRUCK_DRIVER, truckDriver };
+export function addTruckDriver() {
+  return { type: ADD_TRUCK_DRIVER };
 }
 
 export function addTruck(truck) {
@@ -48,4 +50,11 @@ export function findAllSuccess(affiliates = []) {
 
 export function selectAffiliate(selectedAffiliate) {
   return { type: SELECT_AFFILIATE, selectedAffiliate };
+}
+
+export function saveTruckDriverInit(truckDriver) {
+  return async (dispatch) => {
+    await saveTruckDriver(truckDriver);
+    // dispatch(saveTruckDriverSuccess());
+  }
 }

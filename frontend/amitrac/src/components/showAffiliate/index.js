@@ -7,6 +7,8 @@ import {
 import TruckDrivers from '../truckDrivers';
 import Trucks from '../trucks';
 import { connect } from 'react-redux';
+import { Button } from '@material-ui/core';
+import { saveAffiliateInit } from '../../redux/affiliates/actions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+function ShowAffiliate({ dispatch, selectedAffiliate }) {
 
-function ShowAffiliate({ selectedAffiliate }) {
   const classes = useStyles();
   const [companyName, setCompanyName] = useState(selectedAffiliate?.companyName);
   const [cuit, setCuit] = useState(selectedAffiliate?.cuit);
@@ -31,10 +33,23 @@ function ShowAffiliate({ selectedAffiliate }) {
 
   if (!selectedAffiliate) {
     return null;
-  } else if (lastAffiliate?.id !== selectedAffiliate.id) {
+  } else if (lastAffiliate?.id !== selectedAffiliate?.id) {
     setLastAffiliate(selectedAffiliate);
     setCompanyName(selectedAffiliate.companyName);
+    setCuit(selectedAffiliate.cuit);
+    setCredentialNumber(selectedAffiliate.credentialNumber);
+    setCredentialExpiration(selectedAffiliate.credentialExpiration);
   }
+
+  const saveBaseData = () => {
+    dispatch(saveAffiliateInit({
+      id: selectedAffiliate.id,
+      cuit,
+      credentialNumber,
+      credentialExpiration,
+      companyName,
+    }));
+  };
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
@@ -48,7 +63,9 @@ function ShowAffiliate({ selectedAffiliate }) {
           id="date-picker-inline"
           label="Date picker inline"
           value={credentialExpiration}
-          onChange={(date) => {setCredentialExpiration(date)}} ></KeyboardDatePicker>
+          onChange={(date) => {setCredentialExpiration(date)}} >
+      </KeyboardDatePicker>
+      <Button onClick={saveBaseData}>Guardar</Button>
       <TruckDrivers></TruckDrivers>
       <div className={classes.trucks}>
         <Trucks></Trucks>
