@@ -17,4 +17,7 @@ export class TruckDriver extends BaseEntity {
 
   @ManyToOne(() => Affiliate, affiliate => affiliate.truckDrivers)
   affiliate: Affiliate;
+
+  @Column('int')
+  affiliate_id: number;
 }

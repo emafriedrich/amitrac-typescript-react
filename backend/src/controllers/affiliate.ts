@@ -7,7 +7,14 @@ export async function findById(req: Request, res: Response) {
 }
 
 export async function saveOrUpdate(req: Request, res: Response) {
-  
+  const { body } = req;
+  let affiliate = await Affiliate.findOne(req.body.id);
+  if (!affiliate) {
+    affiliate = new Affiliate();
+  }
+  affiliate.set(body);
+  await affiliate.save();
+  res.status(200).send(affiliate);
 }
 
 

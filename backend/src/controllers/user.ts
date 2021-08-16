@@ -11,12 +11,14 @@ export async function register(req: Request, res: Response) {
 export async function login(req: Request, res: Response) {
   const { name, password } = req.body;
 
-  const user = await User.findOne({ name });
+  const user = await User.findOne({ name }, { relations: ['truckDriver', 'truckDriver.affiliate'] });
 
   if (user) {
     const ok = user.comparePassword(password);
     res.status(ok ? 200 : 401).send(ok ? {
-      credential: user.credentialNumber()
+      credential: user.credentialNumber(),
+      affiliateId: user.affiliateId(),
+      userType: user.userType(),
     } : null);
   } else {
     res.status(401).send({ message: 'User and/or password doesn\'t match' });

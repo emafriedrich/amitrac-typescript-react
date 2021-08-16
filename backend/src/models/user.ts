@@ -24,11 +24,19 @@ export class User extends BaseEntity {
   @OneToOne(() => Affiliate)
   affiliate: Affiliate;
 
-  @OneToOne(() => TruckDriver, truckDriver => truckDriver.user)
+  @OneToOne(() => TruckDriver, truckDriver => truckDriver.user, { eager: true })
   truckDriver: TruckDriver;
 
   credentialNumber() {
-    return this.affiliate ? this.affiliate.credentialNumber : this.truckDriver.affiliate.credentialNumber;
+    return this.affiliate ? this.affiliate.credentialNumber : this.truckDriver?.affiliate.credentialNumber;
+  }
+
+  affiliateId() {
+    return this.affiliate ? this.affiliate.credentialNumber : this.truckDriver.affiliate_id;
+  }
+
+  userType() {
+    return this.affiliate ? 'AFFILIATE' : 'TRUCK_DRIVER';
   }
 
   changePassword(newPassword: any) {

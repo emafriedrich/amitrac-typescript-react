@@ -30,4 +30,12 @@ export class Affiliate extends BaseEntity {
   
   @OneToMany(() => TruckDriver, truckDriver => truckDriver.affiliate, { eager: true })
   truckDrivers: TruckDriver[];
+
+  set(body: any) {
+    this.id = body.id;
+    this.credentialNumber = body.credentialNumber;
+    this.credentialExpiration = body.credentialExpiration;
+    this.companyName = body.companyName;
+    this.cuit = body.cuit;
+  }
 }
