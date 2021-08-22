@@ -29,4 +29,10 @@ export class Truck extends BaseEntity {
   @OneToOne(() => User)
   @JoinColumn()
   user: User;
+
+  @Column('bool', { default: true })
+  active: boolean;
+
+  @Column('varchar', { length: 1000 })
+  truckImage: string;
 }

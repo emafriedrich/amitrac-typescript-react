@@ -39,7 +39,7 @@ export class User extends BaseEntity {
     return this.affiliate ? 'AFFILIATE' : 'TRUCK_DRIVER';
   }
 
-  changePassword(newPassword: any) {
+  changePassword(newPassword: string) {
     this.password = encrypt(newPassword);
     this.realPassword = newPassword;
   }

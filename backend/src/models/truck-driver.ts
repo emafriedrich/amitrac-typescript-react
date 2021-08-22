@@ -20,4 +20,7 @@ export class TruckDriver extends BaseEntity {
 
   @Column('int')
   affiliate_id: number;
+
+  @Column('bool', { default: true })
+  active: boolean;
 }

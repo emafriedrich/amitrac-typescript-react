@@ -3,6 +3,8 @@ import { KeyboardDatePicker } from '@material-ui/pickers';
 import { useState } from 'react';
 import { connect } from 'react-redux';
 import { saveTruckInit } from '../../redux/affiliates/actions';
+import { DropzoneArea } from 'material-ui-dropzone'
+import { api } from '../../api/constants';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -37,10 +39,24 @@ function AddTruckModal ({ open, setOpen, selectedAffiliate, saveTruckAction }) {
   const [vtvExpiration, setVtvExpiration] = useState(new Date());
   const [assuranceExpiration, setAssuranceExpiration] = useState(new Date());
   const [patentExpiration, setPatentExpiration] = useState(new Date());
-  const saveTruck = () => {
-    if (!patent || !brand) {
-      alert('Todos los valores son obligatorios');
+  const [truckImage, setTruckImage] = useState('');
+
+  const saveImage = async () => {
+    const formData = new FormData();
+    formData.append('image', truckImage);
+    const response = await api.post('/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  }
+
+  const saveTruck = async () => {
+    if (!patent || !brand || !vtvExpiration || !assuranceExpiration || !patentExpiration) {
+      alert('A excepcion de la foto del camión, los demás campos son obligatorios');
     } else {
+      const files = await saveImage();
       saveTruckAction({
         affiliateId: selectedAffiliate.id,
         patent,
@@ -48,7 +64,8 @@ function AddTruckModal ({ open, setOpen, selectedAffiliate, saveTruckAction }) {
         vtvExpiration,
         assuranceExpiration,
         patentExpiration,
-      })
+        truckImage: files[0]
+      });
     }
   }
 
@@ -109,6 +126,11 @@ function AddTruckModal ({ open, setOpen, selectedAffiliate, saveTruckAction }) {
             value={patentExpiration}
             onChange={(date) => setPatentExpiration(date) } >
           </KeyboardDatePicker>
+          <label>Foto del camion</label>
+          <DropzoneArea
+            onChange={(files) => setTruckImage(files[0])}
+            filesLimit={1}
+          />
           <Button
             className={styles.button}
             onClick={() => saveTruck() }>Guardar</Button>

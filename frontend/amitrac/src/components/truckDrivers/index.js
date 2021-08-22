@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { DataGrid } from '@material-ui/data-grid';
-import { Button } from '@material-ui/core'
+import { Button, FormControlLabel, Switch } from '@material-ui/core'
 import { connect } from 'react-redux';
 
 import AddTruckDriverModal from './addTruckDriverModal';
@@ -27,6 +27,18 @@ function TruckDrivers({ selectedAffiliate }) {
 
   return (
     <div style={{ height: 400, width: '100%' }}>
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+        <h3>Camioneros</h3>
+        <FormControlLabel
+          control={
+            <Switch
+              name="checkedB"
+              color="primary"
+            />
+          }
+          label="Mostrar inactivos"
+        />
+      </div>
       <DataGrid
         rows={rows}
         columns={columns}

@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { DataGrid } from '@material-ui/data-grid';
-import { Button } from '@material-ui/core'
+import { Button, Switch } from '@material-ui/core'
 import { connect } from 'react-redux';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import AddTruckModal from './addTruckModal';
 
 const columns = [
@@ -35,6 +36,12 @@ const columns = [
     field: 'patentExpiration',
     headerName: 'Expiración patente',
     type: 'date',
+    width: 200,
+  },
+  {
+    field: 'active',
+    headerName: 'Activo',
+    type: 'date',
     width: 200
   },
 ];
@@ -49,18 +56,32 @@ function Trucks({ selectedAffiliate }) {
   }
 
   return (
-    <div style={{ height: 400, width: '100%' }}>
+    <div style={{ height: 400, width: '100%', marginTop: '90px' }}>
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+        <h3>Camiones</h3>
+        <FormControlLabel
+          control={
+            <Switch
+              name="checkedB"
+              color="primary"
+            />
+          }
+          label="Mostrar inactivos"
+        />
+      </div>
       <DataGrid
         rows={rows}
         columns={columns}
         pageSize={5}
         checkboxSelection
         disableSelectionOnClick
+        onSelectionModelChange={(nose) => console.log(nose)}
         onCellEditCommit={(params, event) => {
           console.log(params);
         }}
       />
       <Button onClick={addTruck} >Agregar camion</Button>
+      <Button onClick={addTruck}>Desactivar camiones seleccionados</Button>
       <AddTruckModal
         open={open}
         setOpen={setOpen}

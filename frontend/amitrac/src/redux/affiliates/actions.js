@@ -1,4 +1,4 @@
-import { getAffiliates, saveAffiliate, saveTruck, saveTruckDriver } from '../../api/affiliates';
+import { changePassword, getAffiliates, saveAffiliate, saveTruck, saveTruckDriver } from '../../api/affiliates';
 
 export const ADD_AFFILIATE = 'ADD_AFFILIATE';
 export const SAVE_AFFILIATE_INIT = 'SAVE_AFFILIATE_INIT';
@@ -23,6 +23,13 @@ export function saveAffiliateInit(affiliate) {
     await saveAffiliate(affiliate);
     alert('Afiliado guardado');
     window.location.reload();
+  }
+}
+
+export function changePasswordAction(data) {
+  return async (dispatch) => {
+    await changePassword(data);
+    alert('contraseña cambiada');
   }
 }
 

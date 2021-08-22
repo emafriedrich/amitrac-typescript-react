@@ -1,9 +1,10 @@
 import { Router } from 'express';
-import { search, saveOrUpdate } from '../truck';
+import { search, saveOrUpdate, setActive } from '../truck';
 
 export default () => {
   const router = Router();
   router.post('/', saveOrUpdate);
   router.get('/search', search);
+  router.get('/:id/setActive', setActive);
   return router;
 };

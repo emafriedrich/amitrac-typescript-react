@@ -4,7 +4,10 @@ import { User } from '../models/user';
 
 export async function findById(req: Request, res: Response) {
   const { id } = req.params;
-  res.send(await Affiliate.findOne(id));
+  const affiliate = await Affiliate.findOne(id);
+  removeInactiveTruckDrivers(affiliate);
+  removeInactiveTrucks(affiliate);
+  res.send(affiliate);
 }
 
 export async function saveOrUpdate(req: Request, res: Response) {
@@ -25,5 +28,21 @@ export async function saveOrUpdate(req: Request, res: Response) {
 
 
 export async function findAll(req: Request, res: Response) {
-  res.send(await Affiliate.find({ relations: ['user'] }));
+  const affiliates = await Affiliate.find({ relations: ['user'], order: { companyName: 'ASC' } });
+
+  for (const affiliate of affiliates) {
+    removeInactiveTruckDrivers(affiliate);
+    removeInactiveTrucks(affiliate);
+  }
+
+  res.send(affiliates);
 }
+
+function removeInactiveTruckDrivers(affiliate: Affiliate) {
+  affiliate.truckDrivers = affiliate.truckDrivers.filter(truckDriver => truckDriver.active);
+}
+
+function removeInactiveTrucks(affiliate: Affiliate) {
+  affiliate.trucks = affiliate.trucks.filter(truck => truck.active);
+}
+

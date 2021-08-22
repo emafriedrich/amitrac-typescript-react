@@ -9,6 +9,7 @@ import Trucks from '../trucks';
 import { connect } from 'react-redux';
 import { Button } from '@material-ui/core';
 import { saveAffiliateInit } from '../../redux/affiliates/actions';
+import ChangePasswordModal from './changePasswordModal';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,6 +33,7 @@ function ShowAffiliate({ dispatch, selectedAffiliate }) {
   const [lastAffiliate, setLastAffiliate] = useState(selectedAffiliate);
   const [initialPassword, setInitialPassword] = useState('');
   const [username, setUsername] = useState('');
+  const [openChangePasswordModal, setOpenChangePasswordModal] = useState(false);
 
   if (!selectedAffiliate) {
     return null;
@@ -88,12 +90,18 @@ function ShowAffiliate({ dispatch, selectedAffiliate }) {
           onChange={(date) => {setCredentialExpiration(date)}} >
       </KeyboardDatePicker>
       <Button onClick={saveBaseData}>Guardar</Button>
+      <Button onClick={() => setOpenChangePasswordModal(true)}>Cambiar contraseña</Button>
       { selectedAffiliate.id && <TruckDrivers></TruckDrivers> }
       { selectedAffiliate.id &&
         <div className={classes.trucks}>
           <Trucks></Trucks>
         </div>
       }
+      <ChangePasswordModal
+        open={openChangePasswordModal}
+        setOpen={setOpenChangePasswordModal}
+        username={username}
+      ></ChangePasswordModal>
     </form>
   );
 }

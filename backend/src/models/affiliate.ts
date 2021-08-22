@@ -15,7 +15,7 @@ export class Affiliate extends BaseEntity {
   @Column('varchar', { unique: true })
   cuit!: string;
 
-  @OneToOne(() => User, user => user.affiliate)
+  @OneToOne(() => User, user => user.affiliate, { eager: true })
   @JoinColumn()
   user!: User;
 

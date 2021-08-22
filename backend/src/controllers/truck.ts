@@ -13,3 +13,13 @@ export async function search(req: Request, res: Response) {
   const trucks = await Truck.find({ where: { affiliate: { id: affiliateId } } });
   res.send(trucks);
 }
+
+export async function setActive(req: Request, res: Response) {
+  const { active, ids } = req.body;
+  const trucks = await Truck.findByIds(ids);
+  for (const truck of trucks) {
+    truck.active = active;
+    await truck.save();
+  }
+  res.send({ message: 'ok' });
+}

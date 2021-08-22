@@ -17,3 +17,7 @@ export async function saveTruckDriver(truckDriver) {
 export async function saveTruck(truck) {
   await api.post('/trucks', truck);
 }
+
+export async function changePassword(data) {
+  await api.put('/users/changePasswordAdmin', data);
+}

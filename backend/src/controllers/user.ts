@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { Affiliate } from '../models/affiliate';
 import { User } from '../models/user';
 
 export async function register(req: Request, res: Response) {
@@ -37,4 +38,12 @@ export async function changePassword(req: Request, res: Response) {
   } else {
     res.status(403).send({ message: "The user and password doesn't match" });
   }
+}
+
+export async function changePasswordAdmin(req: Request, res: Response) {
+  const { affiliateId, password } = req.body;
+  const affiliate = await Affiliate.findOne(affiliateId);
+  affiliate.user.changePassword(password);
+  await affiliate.user.save();
+  res.send({ message: 'The password was changed' });
 }
