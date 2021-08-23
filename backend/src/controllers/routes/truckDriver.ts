@@ -4,6 +4,6 @@ import { saveOrUpdate, setActive } from '../truckDriver';
 export default () => {
   const router = Router();
   router.post('/', saveOrUpdate);
-  router.post('/:id/setActive', setActive);
+  router.post('/setActive', setActive);
   return router;
 };

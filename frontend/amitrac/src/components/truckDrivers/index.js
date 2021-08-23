@@ -4,19 +4,32 @@ import { Button, FormControlLabel, Switch } from '@material-ui/core'
 import { connect } from 'react-redux';
 
 import AddTruckDriverModal from './addTruckDriverModal';
+import { setActiveTruckDriver } from '../../redux/affiliates/actions';
 
-const columns = [
-  { field: 'id', headerName: 'ID', width: 90 },
-  {
-    field: 'name',
-    headerName: 'Nombre y apellido',
-    width: 300,
-    editable: true,
-  },
-];
 
-function TruckDrivers({ selectedAffiliate }) {
+function TruckDrivers({ selectedAffiliate, setActive }) {
 
+  const columns = [
+    { field: 'id', headerName: 'ID', width: 90 },
+    {
+      field: 'name',
+      headerName: 'Nombre y apellido',
+      width: 300,
+      editable: false,
+    },
+    {
+      field: 'active',
+      headerName: 'Activo',
+      width: 300,
+      renderCell: (params) => {
+        return (
+          <Switch onChange={(event) => {
+            setActive({ truckDriverId: params.id, active: event.target.checked });
+          }} checked={params.value} />
+        );
+      }
+    },
+  ];
   const rows = selectedAffiliate?.truckDrivers || [];
 
   const [open, setOpen] = React.useState(false); 
@@ -29,15 +42,6 @@ function TruckDrivers({ selectedAffiliate }) {
     <div style={{ height: 400, width: '100%' }}>
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
         <h3>Camioneros</h3>
-        <FormControlLabel
-          control={
-            <Switch
-              name="checkedB"
-              color="primary"
-            />
-          }
-          label="Mostrar inactivos"
-        />
       </div>
       <DataGrid
         rows={rows}
@@ -60,4 +64,6 @@ function TruckDrivers({ selectedAffiliate }) {
 
 const mapStateToProps = (state) => ({ selectedAffiliate: state.selectedAffiliate });
 
-export default connect(mapStateToProps)(TruckDrivers);
+const mapDispatchToProps = { setActive: setActiveTruckDriver };
+
+export default connect(mapStateToProps, mapDispatchToProps)(TruckDrivers);

@@ -29,12 +29,6 @@ export async function saveOrUpdate(req: Request, res: Response) {
 
 export async function findAll(req: Request, res: Response) {
   const affiliates = await Affiliate.find({ relations: ['user'], order: { companyName: 'ASC' } });
-
-  for (const affiliate of affiliates) {
-    removeInactiveTruckDrivers(affiliate);
-    removeInactiveTrucks(affiliate);
-  }
-
   res.send(affiliates);
 }
 

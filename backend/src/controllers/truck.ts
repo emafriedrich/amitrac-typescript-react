@@ -14,12 +14,11 @@ export async function search(req: Request, res: Response) {
   res.send(trucks);
 }
 
+
 export async function setActive(req: Request, res: Response) {
-  const { active, ids } = req.body;
-  const trucks = await Truck.findByIds(ids);
-  for (const truck of trucks) {
-    truck.active = active;
-    await truck.save();
-  }
+  const { active, id } = req.body;
+  const truckDriver = await Truck.findOne(id);
+  truckDriver.active = active;
+  await truckDriver.save();
   res.send({ message: 'ok' });
 }

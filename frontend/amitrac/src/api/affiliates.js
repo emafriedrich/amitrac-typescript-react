@@ -21,3 +21,11 @@ export async function saveTruck(truck) {
 export async function changePassword(data) {
   await api.put('/users/changePasswordAdmin', data);
 }
+
+export async function setActiveTruckDriver(data) {
+  await api.post('/truckDrivers/setActive', { id: data.truckDriverId, active: data.active });
+}
+
+export async function setActiveTruck(data) {
+  await api.post('/trucks/setActive', { id: data.truckId, active: data.active });
+}

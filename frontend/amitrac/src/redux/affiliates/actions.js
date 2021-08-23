@@ -1,4 +1,4 @@
-import { changePassword, getAffiliates, saveAffiliate, saveTruck, saveTruckDriver } from '../../api/affiliates';
+import { changePassword, getAffiliates, saveAffiliate, saveTruck, saveTruckDriver, setActiveTruckDriver as apiSetActiveTruckDriver, setActiveTruck as apiSetActiveTruck } from '../../api/affiliates';
 
 export const ADD_AFFILIATE = 'ADD_AFFILIATE';
 export const SAVE_AFFILIATE_INIT = 'SAVE_AFFILIATE_INIT';
@@ -10,6 +10,10 @@ export const FIND_ALL_SUCCESS = 'FIND_ALL_SUCCESS';
 export const SELECT_AFFILIATE = 'SELECT_AFFILIATE';
 export const SAVE_TRUCK_DRIVER = 'SAVE_TRUCK_DRIVER';
 export const SAVE_TRUCK_DRIVER_SUCCESS = 'SAVE_TRUCK_DRIVER_SUCCESS';
+export const SET_ACTIVE_TRUCK_DRIVER = 'SET_ACTIVE_TRUCK_DRIVER';
+export const SET_ACTIVE_TRUCK = 'SET_ACTIVE_TRUCK';
+export const SET_ACTIVE_TRUCK_DRIVER_SUCCESS = 'SET_ACTIVE_TRUCK_DRIVER_SUCCESS';
+export const SET_ACTIVE_TRUCK_SUCCESS = 'SET_ACTIVE_TRUCK_SUCCESS';
 
 export function addAffiliate(affiliate) {
   return {
@@ -62,6 +66,28 @@ export function findAllSuccess(affiliates = []) {
 
 export function selectAffiliate(selectedAffiliate) {
   return { type: SELECT_AFFILIATE, selectedAffiliate };
+}
+
+export function setActiveTruckDriver(params) {
+  return async (dispatch) => {
+    await apiSetActiveTruckDriver(params);
+    dispatch(setActiveTruckDriverSuccess(params));
+  };
+}
+
+export function setActiveTruck(params) {
+  return async (dispatch) => {
+    await apiSetActiveTruck(params);
+    dispatch(setActiveTruckSuccess(params));
+  };
+}
+
+export function setActiveTruckDriverSuccess(params) {
+  return { type: SET_ACTIVE_TRUCK_DRIVER_SUCCESS, params }
+}
+
+export function setActiveTruckSuccess(params) {
+  return { type: SET_ACTIVE_TRUCK_SUCCESS, params }
 }
 
 export function saveTruckDriverInit(truckDriver) {

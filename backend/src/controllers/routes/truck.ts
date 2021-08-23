@@ -5,6 +5,6 @@ export default () => {
   const router = Router();
   router.post('/', saveOrUpdate);
   router.get('/search', search);
-  router.get('/:id/setActive', setActive);
+  router.post('/setActive', setActive);
   return router;
 };
