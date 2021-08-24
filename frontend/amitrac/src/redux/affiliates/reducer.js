@@ -4,6 +4,7 @@ import {
   FIND_ALL_SUCCESS,
   SAVE_AFFILIATE_INIT,
   SAVE_AFFILIATE_SUCCESS,
+  SAVE_TRUCK_SUCCESS,
   SELECT_AFFILIATE,
   SET_ACTIVE_TRUCK_DRIVER_SUCCESS,
   SET_ACTIVE_TRUCK_SUCCESS
@@ -44,8 +45,10 @@ export function affiliatesReducer(state = initialState, action) {
       return { ...state };
     case SAVE_AFFILIATE_SUCCESS:
       return { ...state, isLoading: false };
-      case SELECT_AFFILIATE:
+    case SELECT_AFFILIATE:
       return { ...state, selectedAffiliate: action.selectedAffiliate };
+    case SAVE_TRUCK_SUCCESS:
+      return { ...state, isLoading: false };
     case FIND_ALL_SUCCESS:
       return { ...state, affiliates: action.affiliates };
     default:

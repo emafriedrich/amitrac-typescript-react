@@ -14,6 +14,7 @@ export const SET_ACTIVE_TRUCK_DRIVER = 'SET_ACTIVE_TRUCK_DRIVER';
 export const SET_ACTIVE_TRUCK = 'SET_ACTIVE_TRUCK';
 export const SET_ACTIVE_TRUCK_DRIVER_SUCCESS = 'SET_ACTIVE_TRUCK_DRIVER_SUCCESS';
 export const SET_ACTIVE_TRUCK_SUCCESS = 'SET_ACTIVE_TRUCK_SUCCESS';
+export const SAVE_TRUCK_SUCCESS = 'SAVE_TRUCK_SUCCESS';
 
 export function addAffiliate(affiliate) {
   return {
@@ -41,6 +42,10 @@ export function saveAffiliateSuccess() {
   return { type: SAVE_AFFILIATE_SUCCESS };
 }
 
+export function saveTruckSuccess(truck) {
+  return { type: SAVE_TRUCK_SUCCESS, truck };
+}
+
 export function addTruckDriver() {
   return { type: ADD_TRUCK_DRIVER };
 }
@@ -50,6 +55,19 @@ export function saveTruckInit(truck) {
     await saveTruck(truck);
     alert('Camión guardado');
     window.location.reload();
+  }
+}
+
+export function saveTruckBaseData(truck) {
+  return async (dispatch) => {
+    await saveTruck(truck);
+    dispatch(saveTruckSuccess(truck));
+  }
+}
+
+export function saveTruckDriverBaseData(truck) {
+  return async () => {
+    await saveTruckDriver(truck);
   }
 }
 

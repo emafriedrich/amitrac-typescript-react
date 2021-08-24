@@ -3,9 +3,9 @@ import { DataGrid } from '@material-ui/data-grid';
 import { Button, Switch } from '@material-ui/core'
 import { connect } from 'react-redux';
 import AddTruckModal from './addTruckModal';
-import { setActiveTruck } from '../../redux/affiliates/actions';
+import { saveTruckBaseData, setActiveTruck } from '../../redux/affiliates/actions';
 
-function Trucks({ selectedAffiliate, setActive }) {
+function Trucks({ selectedAffiliate, setActive, saveTruck }) {
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
@@ -13,32 +13,34 @@ function Trucks({ selectedAffiliate, setActive }) {
       field: 'patent',
       headerName: 'Patente',
       width: 150,
-      editable: false,
+      editable: true,
     },
     {
       field: 'brand',
       headerName: 'Marca',
       width: 150,
-      editable: false,
+      editable: true,
     },
     {
       field: 'vtvExpiration',
       headerName: 'Expiración VTV',
       type: 'date',
       width: 200,
-      editable: false,
+      editable: true,
     },
     {
       field: 'assuranceExpiration',
       headerName: 'Expiración Seguro',
       type: 'date',
-      width: 200
+      width: 200,
+      editable: true,
     },
     {
       field: 'patentExpiration',
       headerName: 'Expiración patente',
       type: 'date',
       width: 200,
+      editable: true,
     },
     {
       field: 'active',
@@ -76,7 +78,36 @@ function Trucks({ selectedAffiliate, setActive }) {
         disableSelectionOnClick
         isCellEditable={false}
         onCellEditCommit={(params, event) => {
-          console.log(params);
+          if (params.field === 'vtvExpiration') {
+            saveTruck({
+              id: params.id,
+              vtvExpiration: params.value,
+            });
+          }
+          if (params.field === 'patentExpiration') {
+            saveTruck({
+              id: params.id,
+              patentExpiration: params.value,
+            });
+          }
+          if (params.field === 'assuranceExpiration') {
+            saveTruck({
+              id: params.id,
+              assuranceExpiration: params.value,
+            });
+          }
+          if (params.field === 'brand') {
+            saveTruck({
+              id: params.id,
+              brand: params.value,
+            });
+          }
+          if (params.field === 'patent') {
+            saveTruck({
+              id: params.id,
+              patent: params.value,
+            });
+          }
         }}
       />
       <Button onClick={addTruck} >Agregar camion</Button>
@@ -90,6 +121,6 @@ function Trucks({ selectedAffiliate, setActive }) {
 
 const mapStateToProps = (state) => ({ selectedAffiliate: state.selectedAffiliate });
 
-const mapDispatchToProps = { setActive: setActiveTruck };
+const mapDispatchToProps = { setActive: setActiveTruck, saveTruck: saveTruckBaseData };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Trucks);

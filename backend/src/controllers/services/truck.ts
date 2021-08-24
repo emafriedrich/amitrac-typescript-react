@@ -6,16 +6,20 @@ export async function saveOrUpdate(body: any) {
   let truck = await Truck.findOne(body.id);
   if (!truck) {
     truck = new Truck();
+    const publicPath = process.env.PUBLIC_PATH_IMAGES + '/' + body.truckImage.split('/')[2];
+    copyFileSync(body.truckImage, publicPath);
+    truck.truckImage = '/img/' + publicPath.split('/')[publicPath.split('/').length - 1];
   }
-  truck.patent = body.patent;
-  truck.brand = body.brand;
-  truck.vtvExpiration = new Date(body.vtvExpiration);
-  truck.assuranceExpiration = new Date(body.assuranceExpiration);
-  truck.patentExpiration = new Date(body.patentExpiration);
-  const publicPath = process.env.PUBLIC_PATH_IMAGES + '/' + body.truckImage.split('/')[2];
-  copyFileSync(body.truckImage, publicPath);
-  truck.truckImage = '/img/' + publicPath.split('/')[publicPath.split('/').length - 1];
-  truck.affiliate = await Affiliate.findOne(body.affiliateId);
+  truck.patent = body.patent || truck.patent;
+  truck.brand = body.brand || truck.brand;
+  if (body.vtvExpiration)
+    truck.vtvExpiration = new Date(body.vtvExpiration);
+  if (body.assuranceExpiration)
+    truck.assuranceExpiration = new Date(body.assuranceExpiration);
+  if (body.patentExpiration)
+    truck.patentExpiration = new Date(body.patentExpiration);
+  if (body.affiliateId)
+    truck.affiliate = await Affiliate.findOne(body.affiliateId);
   await truck.save();
   return truck;
 }

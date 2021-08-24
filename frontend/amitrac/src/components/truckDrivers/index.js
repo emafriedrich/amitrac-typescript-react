@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { DataGrid } from '@material-ui/data-grid';
-import { Button, FormControlLabel, Switch } from '@material-ui/core'
+import { Button, Switch } from '@material-ui/core'
 import { connect } from 'react-redux';
 
 import AddTruckDriverModal from './addTruckDriverModal';
-import { setActiveTruckDriver } from '../../redux/affiliates/actions';
+import { saveTruckDriverBaseData, setActiveTruckDriver } from '../../redux/affiliates/actions';
 
 
-function TruckDrivers({ selectedAffiliate, setActive }) {
+function TruckDrivers({ selectedAffiliate, setActive, saveTruckDriver }) {
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
@@ -15,7 +15,7 @@ function TruckDrivers({ selectedAffiliate, setActive }) {
       field: 'name',
       headerName: 'Nombre y apellido',
       width: 300,
-      editable: false,
+      editable: true,
     },
     {
       field: 'active',
@@ -49,8 +49,11 @@ function TruckDrivers({ selectedAffiliate, setActive }) {
         pageSize={5}
         checkboxSelection
         disableSelectionOnClick
-        onCellEditCommit={(params, event) => {
-          console.log(params);
+        onCellEditCommit={(params) => {
+          saveTruckDriver({
+            id: params.id,
+            name: params.value,
+          })
         }}
       />
       <Button onClick={addTruckDriver}>Agregar camionero</Button>
@@ -64,6 +67,6 @@ function TruckDrivers({ selectedAffiliate, setActive }) {
 
 const mapStateToProps = (state) => ({ selectedAffiliate: state.selectedAffiliate });
 
-const mapDispatchToProps = { setActive: setActiveTruckDriver };
+const mapDispatchToProps = { setActive: setActiveTruckDriver, saveTruckDriver: saveTruckDriverBaseData };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TruckDrivers);
