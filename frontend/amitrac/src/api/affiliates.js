@@ -31,5 +31,5 @@ export async function setActiveTruck(data) {
 }
 
 export async function changeTruckPhoto(data) {
-  await api.post('/trucks/changePhoto', { id: data.truckId, image: data.truckImage });
+  return await api.post('/trucks/changePhoto', { id: data.truckId, image: data.truckImage });
 }

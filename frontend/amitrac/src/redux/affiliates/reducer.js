@@ -7,7 +7,8 @@ import {
   SAVE_TRUCK_SUCCESS,
   SELECT_AFFILIATE,
   SET_ACTIVE_TRUCK_DRIVER_SUCCESS,
-  SET_ACTIVE_TRUCK_SUCCESS
+  SET_ACTIVE_TRUCK_SUCCESS,
+  UPDATE_IMAGE_TRUCK
 } from './actions';
 
 const initialState = {
@@ -42,6 +43,10 @@ export function affiliatesReducer(state = initialState, action) {
     case SET_ACTIVE_TRUCK_SUCCESS:
       const truck = state.selectedAffiliate.trucks.find(td => td.id === action.params.truckId);
       truck.active = action.params.active;
+      return { ...state };
+    case UPDATE_IMAGE_TRUCK:
+      const truck2 = state.selectedAffiliate.trucks.find(td => td.id === action.truck.id);
+      truck2.truckImage = action.truck.truckImage;
       return { ...state };
     case SAVE_AFFILIATE_SUCCESS:
       return { ...state, isLoading: false };

@@ -3,11 +3,13 @@ import { DataGrid } from '@material-ui/data-grid';
 import { Button, Link, Switch } from '@material-ui/core'
 import { connect } from 'react-redux';
 import AddTruckModal from './addTruckModal';
-import { saveTruckBaseData, setActiveTruck } from '../../redux/affiliates/actions';
+import { saveTruckBaseData, setActiveTruck, updateImageTruckAction } from '../../redux/affiliates/actions';
 import { api } from '../../api/constants';
 import { changeTruckPhoto } from '../../api/affiliates';
 
-function Trucks({ selectedAffiliate, setActive, saveTruck }) {
+function Trucks({ selectedAffiliate, setActive, saveTruck, updateTruckImage }) {
+
+  const [update, setUpdate] = React.useState(false);
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
@@ -63,6 +65,7 @@ function Trucks({ selectedAffiliate, setActive, saveTruck }) {
       renderCell: (params) => {
         return (
           <>
+            <div style={{ backgroundImage: `url(${params.row.truckImage}`, width: 100, height: 100, backgroundPosition: 'center', backgroundSize: 'cover' } }></div>
             <input type="file" onChange={ async (event) => {
               const formData = new FormData();
               formData.append('image', event.target.files[0]);
@@ -73,8 +76,11 @@ function Trucks({ selectedAffiliate, setActive, saveTruck }) {
               });
               const filePath = response.data[0];
               const data = { truckId: params.row.id, truckImage: filePath };
-              changeTruckPhoto(data).then(() => {
+              changeTruckPhoto(data).then((response) => {
+                console.log(response.data);
+                updateTruckImage(response.data);
                 alert('Imagen cambiada');
+                setUpdate(!update); // hack to force rerender image
               });
             }} ></input>
           </>
@@ -148,6 +154,10 @@ function Trucks({ selectedAffiliate, setActive, saveTruck }) {
 
 const mapStateToProps = (state) => ({ selectedAffiliate: state.selectedAffiliate });
 
-const mapDispatchToProps = { setActive: setActiveTruck, saveTruck: saveTruckBaseData };
+const mapDispatchToProps = {
+  setActive: setActiveTruck,
+  saveTruck: saveTruckBaseData,
+  updateTruckImage: updateImageTruckAction,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Trucks);

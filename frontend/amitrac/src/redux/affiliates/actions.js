@@ -15,6 +15,7 @@ export const SET_ACTIVE_TRUCK = 'SET_ACTIVE_TRUCK';
 export const SET_ACTIVE_TRUCK_DRIVER_SUCCESS = 'SET_ACTIVE_TRUCK_DRIVER_SUCCESS';
 export const SET_ACTIVE_TRUCK_SUCCESS = 'SET_ACTIVE_TRUCK_SUCCESS';
 export const SAVE_TRUCK_SUCCESS = 'SAVE_TRUCK_SUCCESS';
+export const UPDATE_IMAGE_TRUCK = 'UPDATE_IMAGE_TRUCK';
 
 export function addAffiliate(affiliate) {
   return {
@@ -101,11 +102,15 @@ export function setActiveTruck(params) {
 }
 
 export function setActiveTruckDriverSuccess(params) {
-  return { type: SET_ACTIVE_TRUCK_DRIVER_SUCCESS, params }
+  return { type: SET_ACTIVE_TRUCK_DRIVER_SUCCESS, params };
 }
 
 export function setActiveTruckSuccess(params) {
-  return { type: SET_ACTIVE_TRUCK_SUCCESS, params }
+  return { type: SET_ACTIVE_TRUCK_SUCCESS, params };
+}
+
+export function updateImageTruckAction(truck) {
+  return { type: UPDATE_IMAGE_TRUCK, truck };
 }
 
 export function saveTruckDriverInit(truckDriver) {
