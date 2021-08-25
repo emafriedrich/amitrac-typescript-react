@@ -5,7 +5,6 @@ const production = process.env.ENV === 'production';
 
 export const initDatabase = async () => {
   const entities = [production ? 'dist/models/*.js' : 'src/models/*.ts'];
-  console.log(entities);
   try {
     const connection = await createConnection({
       type: 'mysql',

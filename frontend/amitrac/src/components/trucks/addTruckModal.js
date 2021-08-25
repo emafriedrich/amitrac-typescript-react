@@ -32,9 +32,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function AddTruckModal ({ open, setOpen, selectedAffiliate, saveTruckAction }) {
+function AddTruckModal ({ open, setOpen, selectedAffiliate, saveTruckAction, truck }) {
   const styles = useStyles();
-  const [patent, setPatent] = useState('');
+  const [patent, setPatent] = useState(truck?.patent || '');
   const [brand, setBrand] = useState('');
   const [vtvExpiration, setVtvExpiration] = useState(new Date());
   const [assuranceExpiration, setAssuranceExpiration] = useState(new Date());

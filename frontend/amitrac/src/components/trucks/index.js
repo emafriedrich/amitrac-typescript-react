@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { DataGrid } from '@material-ui/data-grid';
-import { Button, Switch } from '@material-ui/core'
+import { Button, Link, Switch } from '@material-ui/core'
 import { connect } from 'react-redux';
 import AddTruckModal from './addTruckModal';
 import { saveTruckBaseData, setActiveTruck } from '../../redux/affiliates/actions';
+import { api } from '../../api/constants';
+import { changeTruckPhoto } from '../../api/affiliates';
 
 function Trucks({ selectedAffiliate, setActive, saveTruck }) {
 
@@ -54,6 +56,31 @@ function Trucks({ selectedAffiliate, setActive, saveTruck }) {
         );
       },
       width: 200
+    },
+    {
+      field: 'truckImage',
+      headerName: 'Cambiar foto del camion',
+      renderCell: (params) => {
+        return (
+          <>
+            <input type="file" onChange={ async (event) => {
+              const formData = new FormData();
+              formData.append('image', event.target.files[0]);
+              const response = await api.post('/upload', formData, {
+                headers: {
+                  'Content-Type': 'multipart/form-data',
+                },
+              });
+              const filePath = response.data[0];
+              const data = { truckId: params.row.id, truckImage: filePath };
+              changeTruckPhoto(data).then(() => {
+                alert('Imagen cambiada');
+              });
+            }} ></input>
+          </>
+        );
+      },
+      width: 300
     },
   ];
 
