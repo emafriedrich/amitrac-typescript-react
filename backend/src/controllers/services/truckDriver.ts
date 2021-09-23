@@ -3,7 +3,7 @@ import { TruckDriver } from '../../models/truck-driver';
 import { User } from '../../models/user';
 
 export async function saveOrUpdate(body: any) {
-  let truckDriver = await TruckDriver.findOne(body.id);
+  let truckDriver = await TruckDriver.findOne({ where: { id: body.id } });
   if (!truckDriver) {
     truckDriver = new TruckDriver();
     const user = new User(body.username, body.initialPassword);
