@@ -3,7 +3,7 @@ import { Affiliate } from '../../models/affiliate';
 import { Truck } from '../../models/truck';
 
 export async function saveOrUpdate(body: any) {
-  let truck = await Truck.findOne(body.id);
+  let truck = await Truck.findOne({ where: { id: body.id } });
   if (!truck) {
     truck = new Truck();
     const publicPath = process.env.PUBLIC_PATH_IMAGES + '/' + body.truckImage.split('/')[2];

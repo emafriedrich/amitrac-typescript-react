@@ -26,7 +26,6 @@ export async function saveOrUpdate(req: Request, res: Response) {
   res.status(200).send(affiliate);
 }
 
-
 export async function findAll(req: Request, res: Response) {
   const affiliates = await Affiliate.find({ relations: ['user'], order: { companyName: 'ASC' } });
   res.send(affiliates);
