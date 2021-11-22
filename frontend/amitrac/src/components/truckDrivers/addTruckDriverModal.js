@@ -86,7 +86,7 @@ function AddTruckDriverModal ({ open, setOpen, selectedAffiliate, saveTruckDrive
   )
 };
 
-const mapStateToProps = (state) => ({ selectedAffiliate: state.selectedAffiliate });
+const mapStateToProps = (state) => ({ selectedAffiliate: state.affiliates.selectedAffiliate });
 
 const mapDispatchToProps = { saveTruckDriverAction: saveTruckDriverInit };
 

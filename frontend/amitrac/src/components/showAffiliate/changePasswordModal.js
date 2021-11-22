@@ -40,7 +40,7 @@ function ChangePasswordModal ({ open, setOpen, username, selectedAffiliate, disp
         password,
       });
     } else {
-      alert('Faltan escriba una contraseña');
+      alert('Falta escribir una contraseña');
     }
   };
 
@@ -75,7 +75,7 @@ function ChangePasswordModal ({ open, setOpen, username, selectedAffiliate, disp
   )
 };
 
-const mapStateToProps = (state) => ({ selectedAffiliate: state.selectedAffiliate });
+const mapStateToProps = (state) => ({ selectedAffiliate: state.affiliates.selectedAffiliate });
 
 const mapDispatchToProps = { dispatchChangePassword: changePasswordAction };
 

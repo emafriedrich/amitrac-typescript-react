@@ -33,6 +33,9 @@ export class Truck extends BaseEntity {
   @Column('bool', { default: true })
   active: boolean;
 
-  @Column('varchar', { length: 1000 })
+  @Column('varchar', { length: 1000, default: '' })
   truckImage: string;
+
+  @Column('varchar', { length: 2000, default: '' })
+  link: string;
 }

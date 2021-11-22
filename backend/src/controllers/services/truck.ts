@@ -20,6 +20,7 @@ export async function saveOrUpdate(body: any) {
     truck.patentExpiration = new Date(body.patentExpiration);
   if (body.affiliateId)
     truck.affiliate = await Affiliate.findOne(body.affiliateId);
+  truck.link = body.link;
   await truck.save();
   return truck;
 }

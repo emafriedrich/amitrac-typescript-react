@@ -7,7 +7,8 @@ export async function getAffiliates() {
 }
 
 export async function saveAffiliate(affiliate) {
-  await api.post('/affiliates', affiliate);
+  const response = await api.post('/affiliates', affiliate);
+  return response.data;
 }
 
 export async function saveTruckDriver(truckDriver) {
@@ -32,4 +33,9 @@ export async function setActiveTruck(data) {
 
 export async function changeTruckPhoto(data) {
   return await api.post('/trucks/changePhoto', { id: data.truckId, image: data.truckImage });
+}
+
+export async function findAffiliateById(affiliateId) {
+  const response = await api.get(`/affiliates/${affiliateId}`);
+  return response.data;
 }

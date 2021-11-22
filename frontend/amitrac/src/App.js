@@ -110,6 +110,7 @@ function MiniDrawer(props) {
 
   useEffect(() => {
     props.getAffiliates();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -198,7 +199,7 @@ function MiniDrawer(props) {
 }
 
 const mapStateToProps = (state) => {
-  return { affiliates: state.affiliates };
+  return { affiliates: state.affiliates.affiliates };
 };
 
 const mapDispatchToProps = { getAffiliates: findAllInit, setAffiliate: selectAffiliate, addAffiliate: addAffiliateAction };

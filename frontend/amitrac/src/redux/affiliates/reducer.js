@@ -41,12 +41,12 @@ export function affiliatesReducer(state = initialState, action) {
       truckDriver.active = action.params.active;
       return { ...state };
     case SET_ACTIVE_TRUCK_SUCCESS:
-      const truck = state.selectedAffiliate.trucks.find(td => td.id === action.params.truckId);
+      let truck = state.selectedAffiliate.trucks.find(td => td.id === action.params.truckId);
       truck.active = action.params.active;
       return { ...state };
     case UPDATE_IMAGE_TRUCK:
-      const truck2 = state.selectedAffiliate.trucks.find(td => td.id === action.truck.id);
-      truck2.truckImage = action.truck.truckImage;
+      truck = state.selectedAffiliate.trucks.find(td => td.id === action.truck.id);
+      truck.truckImage = action.truck.truckImage;
       return { ...state };
     case SAVE_AFFILIATE_SUCCESS:
       return { ...state, isLoading: false };

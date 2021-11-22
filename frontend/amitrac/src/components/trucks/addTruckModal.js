@@ -40,6 +40,7 @@ function AddTruckModal ({ open, setOpen, selectedAffiliate, saveTruckAction, tru
   const [assuranceExpiration, setAssuranceExpiration] = useState(new Date());
   const [patentExpiration, setPatentExpiration] = useState(new Date());
   const [truckImage, setTruckImage] = useState('');
+  const [link, setLink] = useState('');
 
   const saveImage = async () => {
     const formData = new FormData();
@@ -64,7 +65,8 @@ function AddTruckModal ({ open, setOpen, selectedAffiliate, saveTruckAction, tru
         vtvExpiration,
         assuranceExpiration,
         patentExpiration,
-        truckImage: files[0]
+        truckImage: files[0],
+        link,
       });
     }
   }
@@ -126,6 +128,13 @@ function AddTruckModal ({ open, setOpen, selectedAffiliate, saveTruckAction, tru
             value={patentExpiration}
             onChange={(date) => setPatentExpiration(date) } >
           </KeyboardDatePicker>
+          <TextField
+            className={styles.marginTextField}
+            variant="outlined"
+            label="Link"
+            value={link}
+            onChange={(event) => setLink(event.target.value)}>
+          </TextField>
           <label>Foto del camion</label>
           <DropzoneArea
             onChange={(files) => setTruckImage(files[0])}
@@ -141,7 +150,7 @@ function AddTruckModal ({ open, setOpen, selectedAffiliate, saveTruckAction, tru
 
 
 
-const mapStateToProps = (state) => ({ selectedAffiliate: state.selectedAffiliate });
+const mapStateToProps = (state) => ({ selectedAffiliate: state.affiliates.selectedAffiliate });
 
 const mapDispatchToProps = { saveTruckAction: saveTruckInit };
 
