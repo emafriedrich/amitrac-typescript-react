@@ -112,7 +112,12 @@ function ShowAffiliate({ selectedAffiliate, setOpenChangePasswordModal, openChan
       ></KeyboardDatePicker>
       <Button
         onClick={saveBaseData}
-        disabled={!initialPassword || !username || !cuit || !companyName || !credentialNumber}
+        disabled={
+          (!selectedAffiliate.id && (!initialPassword || !username)) ||
+          !cuit ||
+          !companyName ||
+          !credentialNumber
+        }
       >
         Guardar
       </Button>
