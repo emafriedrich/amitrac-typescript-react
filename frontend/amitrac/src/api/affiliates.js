@@ -2,8 +2,7 @@ import { api } from './constants';
 
 export async function getAffiliates() {
   const response = await api.get('/affiliates');
-  const data = response.data
-  return data.length ? [...data] : { ...data };
+  return response.data;
 }
 
 export async function saveAffiliate(affiliate) {
